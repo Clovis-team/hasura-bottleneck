@@ -6,7 +6,7 @@ SELECT
     -- Create a line for each user for each org/project to make it available for hasura permissions
     unnest(org_members.org_user_ids) as user_id
 FROM projects_to_users
-RIGHT JOIN (
+INNER JOIN (
     SELECT
         orgs_to_users.org_id,
         array_agg(DISTINCT orgs_to_users.user_id) as org_user_ids

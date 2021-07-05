@@ -1,4 +1,7 @@
 SET check_function_bodies = false;
+ALTER TABLE table_name DISABLE TRIGGER trigger_name
+ALTER TABLE orgs_to_users DISABLE TRIGGER refresh_orgs_projects_users_materialized_view; 
+ALTER TABLE projects_to_users DISABLE TRIGGER refresh_orgs_projects_users_materialized_view;
 INSERT INTO public.orgs (id, name) VALUES ('d8275444-bd10-4783-9c7d-2a220ef238c1', 'et');
 INSERT INTO public.orgs (id, name) VALUES ('4afc7820-c727-413e-8f70-4295daa1097a', 'odio');
 INSERT INTO public.orgs (id, name) VALUES ('e80f5c0e-5450-4074-9714-fe84b6d81287', 'ut');
@@ -2798,4 +2801,6 @@ INSERT INTO public.projects_to_users (id, project_id, user_id) VALUES ('3827a586
 INSERT INTO public.projects_to_users (id, project_id, user_id) VALUES ('d926fa75-4f1e-4926-8229-a34e9ca872a8', '85780162-cc3e-46f6-a0be-3b92f7d725e7', '8a11939c-3e70-4b2e-ac13-f2579cad8833');
 INSERT INTO public.projects_to_users (id, project_id, user_id) VALUES ('c7349e7b-6363-4188-b123-49a702aaf9be', '85780162-cc3e-46f6-a0be-3b92f7d725e7', '9342151a-44f4-43d6-a6ec-0530bd4953c5');
 INSERT INTO public.projects_to_users (id, project_id, user_id) VALUES ('1a851b4b-3db1-4597-9454-c4ba3f8489b2', '85780162-cc3e-46f6-a0be-3b92f7d725e7', '36984761-4a3a-4c95-901b-c003fcfdd760');
+ALTER TABLE orgs_to_users ENABLE TRIGGER refresh_orgs_projects_users_materialized_view; 
+ALTER TABLE projects_to_users ENABLE TRIGGER refresh_orgs_projects_users_materialized_view;
 INSERT INTO public.projects_to_users (id, project_id, user_id) VALUES ('2a571145-2438-4af5-b877-085ebdcc1c07', '85780162-cc3e-46f6-a0be-3b92f7d725e7', '8fa8b1d2-1fca-4524-97fd-913933072dad');
