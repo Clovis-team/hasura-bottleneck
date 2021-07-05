@@ -1,3 +1,29 @@
+# Use case
+
+This simply demostrate the following rules:
+
+An user can have multiples projects.
+An user can be in multiples orgs with different roles ("standard" | "admin" | "owner" | "limited")
+A project can have multiples members.
+An org can have multiples members.
+
+An user have access to a project global infos in two cases:
+
+1. The user is a direct member of the project.
+2. A member of the project share an organization with the "user", and in this organization, the user is not "limited".
+
+Of courses, the same condition apply for "public" project associtation fields (eg: the address of a project is considered as a public information)
+
+
+## The issue
+
+When querying nested associations, the check conditions reapply every time (we check if you have access to the project, then we check if you have access to the address). Making queries to significantly slow down.
+
+## Tried solution:
+
+1. Using an intermediate view to try to create a "hard link" between orgMembers(with allowed roles) -> project_id. When this method was working well for a tiny amount of data, the "view creation" time at each request was growing wildly when the number of rows/relations in the tables increased.
+
+
 # Setup
 
 1. Run Hasura + Postgres database
@@ -66,4 +92,17 @@ This one should also be slow:
 }
 ```
 
-If you remove the permissions on the "project_address" tables, the requests should speed up. 
+If you remove the permissions on the "project_address" tables, the requests should speed up.
+
+## Some analyse of the queries
+
+- Query projects -> address without permissions on address:
+[without_permission_on_address.pdf](https://github.com/Clovis-team/hasura-bottleneck/files/6764125/without_permission_on_address.pdf)
+
+
+
+- Query projects -> address with permissions on addresse:
+[query_with_address_permissions.pdf](https://github.com/Clovis-team/hasura-bottleneck/files/6764126/query_with_address_permissions.pdf)
+
+
+
