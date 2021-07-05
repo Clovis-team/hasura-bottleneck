@@ -1,0 +1,28 @@
+version: '3.6'
+
+services:
+  postgres:
+    image: postgres:12
+    healthcheck:
+      test: "pg_isready --username=postgres && psql --username=postgres --list"
+      timeout: 10s
+      retries: 20
+    environment:
+      POSTGRES_DB: default
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  graphql_engine:
+    image: hasura/graphql-engine:v2.0.1.cli-migrations-v3
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      # The local .env file is automatically loaded, you can reuse any variables set in it
+      HASURA_GRAPHQL_ADMIN_SECRET: "secret"
+      HASURA_GRAPHQL_DATABASE_URL: "postgres://postgres:postgres@postgres:5432/default"
+      HASURA_GRAPHQL_LOG_LEVEL: "debug"
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+      HASURA_GRAPHQL_ENABLE_REMOTE_SCHEMA_PERMISSIONS: "true"
+      HASURA_GRAPHQL_JWT_SECRET: "{\"type\": \"HS256\", \"key\": \"my-very-secure-key-for-testing-environment\"}"
+      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: public

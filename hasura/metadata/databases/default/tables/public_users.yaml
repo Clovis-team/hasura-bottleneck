@@ -1,0 +1,38 @@
+table:
+  name: users
+  schema: public
+array_relationships:
+- name: orgs
+  using:
+    foreign_key_constraint_on:
+      column: user_id
+      table:
+        name: orgs_to_users
+        schema: public
+- name: projects
+  using:
+    foreign_key_constraint_on:
+      column: user_id
+      table:
+        name: projects_to_users
+        schema: public
+select_permissions:
+- permission:
+    columns:
+    - id
+    - name
+    filter:
+      _or:
+      - id:
+          _eq: X-Hasura-User-Id
+      - orgs:
+          org:
+            members:
+              user_id:
+                _eq: X-Hasura-User-Id
+      - projects:
+          project:
+            members:
+              user_id:
+                _eq: X-Hasura-User-Id
+  role: user

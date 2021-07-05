@@ -1,0 +1,19 @@
+table:
+  name: orgs
+  schema: public
+array_relationships:
+- name: members
+  using:
+    foreign_key_constraint_on:
+      column: org_id
+      table:
+        name: orgs_to_users
+        schema: public
+select_permissions:
+- permission:
+    columns: []
+    filter:
+      members:
+        user_id:
+          _eq: X-Hasura-User-Id
+  role: user
