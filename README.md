@@ -21,7 +21,7 @@ When querying nested associations, the check conditions reapply every time (we c
 
 ## Tried solution:
 
-1. Using an intermediate view to try to create a "hard link" between orgMembers(with allowed roles) -> project_id. When this method was working well for a tiny amount of data, the "view creation" time at each request was growing wildly when the number of rows/relations in the tables increased.
+1. Using an intermediate materialized view to try to create a "hard link" between orgMembers(with allowed roles) -> project_id. When this method was working well for a tiny amount of data, the "view creation" time grow with the number of rows in the DB. The implementation can be found here: https://github.com/Clovis-team/hasura-bottleneck/pull/1
 
 
 # Setup
