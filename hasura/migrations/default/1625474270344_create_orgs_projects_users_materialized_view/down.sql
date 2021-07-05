@@ -1,0 +1,4 @@
+DROP MATERIALIZED VIEW orgs_projects_users;
+DROP FUNCTION refresh_orgs_projects_users_materialized_view;
+DROP TRIGGER refresh_orgs_projects_users_materialized_view ON orgs_to_users;
+DROP TRIGGER refresh_orgs_projects_users_materialized_view ON projects_to_users;

@@ -17,25 +17,26 @@ array_relationships:
       table:
         name: projects_to_users
         schema: public
+- name: org_members
+  using:
+    manual_configuration:
+      column_mapping:
+        id: project_id
+      insertion_order: null
+      remote_table:
+        name: orgs_projects_users
+        schema: public
 select_permissions:
 - permission:
-    columns: []
+    columns:
+    - id
+    - name
     filter:
-      members:
-        _or:
-        - user_id:
+      _or:
+      - members:
+          user_id:
             _eq: X-Hasura-User-Id
-        - user:
-            orgs:
-              org:
-                members:
-                  _and:
-                  - user_id:
-                      _eq: X-Hasura-User-Id
-                  - role:
-                      name:
-                        _in:
-                        - owner
-                        - administrator
-                        - standard
+      - org_members:
+          user_id:
+            _eq: X-Hasura-User-Id
   role: user
