@@ -1,5 +1,4 @@
 SET check_function_bodies = false;
-ALTER TABLE table_name DISABLE TRIGGER trigger_name
 ALTER TABLE orgs_to_users DISABLE TRIGGER refresh_orgs_projects_users_materialized_view; 
 ALTER TABLE projects_to_users DISABLE TRIGGER refresh_orgs_projects_users_materialized_view;
 INSERT INTO public.orgs (id, name) VALUES ('d8275444-bd10-4783-9c7d-2a220ef238c1', 'et');

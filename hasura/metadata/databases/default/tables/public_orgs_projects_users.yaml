@@ -2,15 +2,6 @@ table:
   name: orgs_projects_users
   schema: public
 object_relationships:
-- name: org
-  using:
-    manual_configuration:
-      column_mapping:
-        org_id: id
-      insertion_order: null
-      remote_table:
-        name: orgs
-        schema: public
 - name: project
   using:
     manual_configuration:
