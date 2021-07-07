@@ -17,12 +17,20 @@ Of courses, the same condition apply for "public" project associtation fields (e
 
 ## The issue
 
-When querying nested associations, the check conditions reapply every time (we check if you have access to the project, then we check if you have access to the address). Making queries to significantly slow down.
+When querying nested associations, the check conditions reapply every time we get a relation (we check if you have access to the project, then we check if you have access to the address). Making queries to significantly slow down.
 
 ## Tried solution:
 
 1. Using an intermediate materialized view to try to create a "hard link" between orgMembers(with allowed roles) -> project_id. When this method was working well for a tiny amount of data, the "view creation" time grow with the number of rows in the DB. The implementation can be found here: https://github.com/Clovis-team/hasura-bottleneck/pull/1
 
+# Possible solution
+
+Maybe having a way to "choose" from where an user can have access to a table (control the graph path) could be the best way to handle this case.
+
+Being able to "mask" the "project_address" from the root, and keeping it only as a relation inside "projects" would allow us to know that the user accessing
+the "project_address" have already been checked in terms of permissions access by the "projects" permissions, and therefore, can access the "project_address" of this project without any futher check.
+
+So we would have an "projects" at query_root with the permissions set to it. Then, for every "public relations" for this project we'll have link without any permissions since we'll know that the permission have already been checked in the path of the query.
 
 # Setup
 
