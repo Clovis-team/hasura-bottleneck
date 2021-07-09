@@ -1,0 +1,22 @@
+table:
+  name: orgs_projects_users
+  schema: public
+object_relationships:
+- name: project
+  using:
+    manual_configuration:
+      column_mapping:
+        project_id: id
+      insertion_order: null
+      remote_table:
+        name: projects
+        schema: public
+- name: user
+  using:
+    manual_configuration:
+      column_mapping:
+        user_id: id
+      insertion_order: null
+      remote_table:
+        name: users
+        schema: public

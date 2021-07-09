@@ -12,21 +12,11 @@ select_permissions:
     - street
     filter:
       project:
-        members:
-          _or:
-          - user_id:
+        _or:
+        - members:
+            user_id:
               _eq: X-Hasura-User-Id
-          - user:
-              orgs:
-                org:
-                  members:
-                    _and:
-                    - user_id:
-                        _eq: X-Hasura-User-Id
-                    - role:
-                        name:
-                          _in:
-                          - owner
-                          - administrator
-                          - standard
+        - org_members:
+            user_id:
+              _eq: X-Hasura-User-Id
   role: user

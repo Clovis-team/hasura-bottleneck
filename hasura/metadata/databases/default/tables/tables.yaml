@@ -1,5 +1,6 @@
 - "!include public_org_roles.yaml"
 - "!include public_orgs.yaml"
+- "!include public_orgs_projects_users.yaml"
 - "!include public_orgs_to_users.yaml"
 - "!include public_project_address.yaml"
 - "!include public_projects.yaml"
